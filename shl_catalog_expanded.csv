@@ -1,0 +1,21 @@
+name,url,description,duration,remote,adaptive
+Verify Numerical Reasoning,https://www.shl.com/products/verify-numerical-reasoning/,"Measures ability to evaluate, analyze, and interpret numerical information. Supports remote and adaptive testing.",20 minutes,Yes,Yes
+Verify Verbal Reasoning,https://www.shl.com/products/verify-verbal-reasoning/,Assesses ability to understand and evaluate written information. Remote testing supported.,19 minutes,Yes,No
+General Ability Test (G+),https://www.shl.com/products/general-ability-test/,"Combines verbal, numerical, and logical reasoning in one test. Adaptive and remote friendly.",36 minutes,Yes,Yes
+Personality Questionnaire (OPQ),https://www.shl.com/products/opq/,Evaluates personality traits and behavioral styles. Used for hiring and development.,25 minutes,Yes,No
+Coding Simulations – Java,https://www.shl.com/products/coding-simulations-java/,Assesses hands-on Java programming and debugging skills in real environments.,40 minutes,Yes,No
+Cognitive Ability Test (CAT),https://www.shl.com/products/cognitive-ability-test/,"Tests numerical, verbal, and abstract reasoning. Remote and adaptive features enabled.",30 minutes,Yes,Yes
+Situational Judgement Test (SJT),https://www.shl.com/products/sjt/,Measures decision-making and interpersonal behavior in workplace scenarios.,20 minutes,Yes,No
+Sales Potential Assessment,https://www.shl.com/products/sales-potential-assessment/,Evaluates personality and cognitive traits relevant to sales roles.,30 minutes,Yes,No
+Leadership Potential Assessment,https://www.shl.com/products/leadership-potential-assessment/,Identifies leadership capabilities and future potential.,45 minutes,Yes,No
+Technical Problem Solving Test,https://www.shl.com/products/technical-problem-solving/,Assesses analytical and logical problem-solving skills for technical roles.,35 minutes,Yes,No
+Verify Inductive Reasoning,https://www.shl.com/products/verify-inductive-reasoning/,"Measures logical thinking and pattern recognition, often used in graduate and managerial roles.",20 minutes,Yes,Yes
+Verify Mechanical Comprehension,https://www.shl.com/products/verify-mechanical-comprehension/,"Evaluates understanding of mechanical and physical principles, commonly used for technical roles.",22 minutes,Yes,No
+Customer Service Simulation,https://www.shl.com/products/customer-service-simulation/,"Simulates customer interactions to measure problem solving, empathy, and service orientation.",30 minutes,Yes,No
+IT Developer Simulation,https://www.shl.com/products/it-developer-simulation/,Realistic development tasks for software engineers and IT professionals.,45 minutes,Yes,No
+Situational Strengths Test,https://www.shl.com/products/situational-strengths-test/,Measures values and motivators under job-relevant situations.,25 minutes,Yes,No
+Critical Reasoning Test Battery,https://www.shl.com/products/critical-reasoning-test/,"Includes verbal, numerical, and abstract reasoning assessments.",35 minutes,Yes,Yes
+Graduate Talent Screener,https://www.shl.com/products/graduate-talent-screener/,Designed to identify high-potential graduate-level candidates.,30 minutes,Yes,Yes
+Remote Work Readiness Assessment,https://www.shl.com/products/remote-readiness-assessment/,"Evaluates productivity, motivation, and adaptability for remote work environments.",25 minutes,Yes,No
+Workplace Safety Assessment,https://www.shl.com/products/workplace-safety-assessment/,Identifies safe behavior practices and risk tolerance in industrial environments.,20 minutes,Yes,No
+Managerial Judgement Indicator,https://www.shl.com/products/managerial-judgement-indicator/,Assesses decision-making and leadership judgment in managerial contexts.,35 minutes,Yes,No
