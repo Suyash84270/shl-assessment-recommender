@@ -12,25 +12,29 @@ def load_data():
         st.stop()
     return pd.read_csv(path)
 
-# Query local TinyLlama model via Ollama
-def query_ollama(prompt):
+# Query Hugging Face Inference API (No Auth required for public models)
+def query_huggingface(prompt):
+    API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-small"
+    headers = {"Content-Type": "application/json"}
+
     try:
         response = requests.post(
-            "http://localhost:11434/api/generate",
-            json={
-                "model": "tinyllama",  # Change this if you're using a different model name
-                "prompt": prompt,
-                "stream": False
-            }
+            API_URL,
+            headers=headers,
+            json={"inputs": prompt}
         )
         response.raise_for_status()
-        return response.json()["response"]
-    except requests.exceptions.RequestException as e:
-        return f"❌ Error communicating with TinyLlama: {e}"
+        result = response.json()
+        if isinstance(result, list):
+            return result[0]["generated_text"]
+        else:
+            return result.get("generated_text", "No response generated.")
+    except Exception as e:
+        return f"❌ Error communicating with Hugging Face API: {e}"
 
 # Streamlit UI
 st.set_page_config(page_title="SHL Assessment Recommender")
-st.title("🤖 SHL Assessment Recommender (TinyLlama-Powered)")
+st.title("🤖 SHL Assessment Recommender (HF-Powered)")
 
 user_input = st.text_area("Paste Job Description or Query:")
 
@@ -44,13 +48,13 @@ if st.button("Recommend"):
             for _, row in df.iterrows()
         ])
         prompt = f"""
-Given the following available assessments:
+Given the following SHL assessments:
 
 {assessment_text}
 
-Based on the user query below, recommend the most relevant SHL assessments:
+Suggest the most relevant assessments based on the job description:
 
-Query: {user_input}
+{user_input}
 """
-        response = query_ollama(prompt)
+        response = query_huggingface(prompt)
         st.markdown(response)
