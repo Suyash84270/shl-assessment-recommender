@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+import requests
 
+# Load assessment catalog
 @st.cache_data
 def load_data():
     path = "shl_catalog_expanded.csv"
@@ -10,16 +12,25 @@ def load_data():
         st.stop()
     return pd.read_csv(path)
 
-# Dummy LLM logic
+# Query local TinyLlama model via Ollama
 def query_ollama(prompt):
-    return """
-1. **Cognitive Ability Test** – To assess problem-solving and logical thinking.
-2. **Personality Inventory** – To evaluate team fit and behavior.
-3. **Situational Judgement Test** – For workplace decision-making skills.
-"""
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "tinyllama",  # Change this if you're using a different model name
+                "prompt": prompt,
+                "stream": False
+            }
+        )
+        response.raise_for_status()
+        return response.json()["response"]
+    except requests.exceptions.RequestException as e:
+        return f"❌ Error communicating with TinyLlama: {e}"
 
+# Streamlit UI
 st.set_page_config(page_title="SHL Assessment Recommender")
-st.title("🤖 SHL Assessment Recommender (Demo)")
+st.title("🤖 SHL Assessment Recommender (TinyLlama-Powered)")
 
 user_input = st.text_area("Paste Job Description or Query:")
 
@@ -32,6 +43,14 @@ if st.button("Recommend"):
             f"{row['name']}: {row['description']}" 
             for _, row in df.iterrows()
         ])
-        prompt = f"Available assessments:\n{assessment_text}\nUser query: {user_input}"
+        prompt = f"""
+Given the following available assessments:
+
+{assessment_text}
+
+Based on the user query below, recommend the most relevant SHL assessments:
+
+Query: {user_input}
+"""
         response = query_ollama(prompt)
         st.markdown(response)
