@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import requests
 
-# Your Hugging Face token (used directly — insecure for public sharing)
+# Direct token (for demo/testing — NOT for public sharing)
 HF_API_TOKEN = "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"
 
 # Load assessment catalog
@@ -15,9 +15,9 @@ def load_data():
         st.stop()
     return pd.read_csv(path)
 
-# Query Hugging Face Inference API directly using token
+# Query Hugging Face API with Falcon model
 def query_huggingface(prompt):
-    API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-small"
+    API_URL = "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct"
     headers = {
         "Authorization": f"Bearer {HF_API_TOKEN}",
         "Content-Type": "application/json"
@@ -31,16 +31,15 @@ def query_huggingface(prompt):
         )
         response.raise_for_status()
         result = response.json()
-        if isinstance(result, list):
+        if isinstance(result, list) and "generated_text" in result[0]:
             return result[0]["generated_text"]
-        else:
-            return result.get("generated_text", "No response generated.")
+        return result.get("generated_text", "⚠️ No meaningful response received.")
     except Exception as e:
         return f"❌ Error communicating with Hugging Face API: {e}"
 
 # Streamlit UI
 st.set_page_config(page_title="SHL Assessment Recommender")
-st.title("🤖 SHL Assessment Recommender (HF LLM Powered)")
+st.title("🤖 SHL Assessment Recommender (Falcon-7B Powered)")
 
 user_input = st.text_area("Paste Job Description or Query:")
 
@@ -54,14 +53,14 @@ if st.button("Recommend"):
             for _, row in df.iterrows()
         ])
         prompt = f"""
-Given the following SHL assessments:
+You are an intelligent assistant. Based on the following SHL assessments:
 
 {assessment_text}
 
-Suggest the most relevant assessments based on the job description:
+Please suggest the most relevant SHL assessments for the following job description:
 
 {user_input}
 """
-        with st.spinner("Generating recommendations..."):
+        with st.spinner("Thinking..."):
             response = query_huggingface(prompt)
         st.markdown(response)
