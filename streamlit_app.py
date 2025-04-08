@@ -3,6 +3,9 @@ import pandas as pd
 import os
 import requests
 
+# Your Hugging Face token (used directly — insecure for public sharing)
+HF_API_TOKEN = "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"
+
 # Load assessment catalog
 @st.cache_data
 def load_data():
@@ -12,10 +15,13 @@ def load_data():
         st.stop()
     return pd.read_csv(path)
 
-# Query Hugging Face Inference API (No Auth required for public models)
+# Query Hugging Face Inference API directly using token
 def query_huggingface(prompt):
     API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-small"
-    headers = {"Content-Type": "application/json"}
+    headers = {
+        "Authorization": f"Bearer {HF_API_TOKEN}",
+        "Content-Type": "application/json"
+    }
 
     try:
         response = requests.post(
@@ -34,7 +40,7 @@ def query_huggingface(prompt):
 
 # Streamlit UI
 st.set_page_config(page_title="SHL Assessment Recommender")
-st.title("🤖 SHL Assessment Recommender (HF-Powered)")
+st.title("🤖 SHL Assessment Recommender (HF LLM Powered)")
 
 user_input = st.text_area("Paste Job Description or Query:")
 
@@ -56,5 +62,6 @@ Suggest the most relevant assessments based on the job description:
 
 {user_input}
 """
-        response = query_huggingface(prompt)
+        with st.spinner("Generating recommendations..."):
+            response = query_huggingface(prompt)
         st.markdown(response)
