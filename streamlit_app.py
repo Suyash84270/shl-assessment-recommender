@@ -4,7 +4,7 @@ import os
 import requests
 
 # Direct token (for demo/testing — NOT for public sharing)
-HF_API_TOKEN = st.secrets['HUGGINGFACE_API_TOKEN']
+HF_API_TOKEN = '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'
 
 # Load assessment catalog
 @st.cache_data
